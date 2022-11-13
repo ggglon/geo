@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>lehh</title>
+    ​<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script type="text/javascript" src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <div id="map"></div>
+    <style>
+        html,
+        body,
+        #map{
+            padding:0;
+            margin:0;
+            width:100%;
+            height:100%;
+            overflow:hidding;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>My Map</h2>
+    <div id="map">hh</div>
+    <script type="text/javascript" src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script type="text/javascript">
+        
+        //var map =L.map('map').setView([102.84233, 24.88163],13);
+        var map = new L.Map('map', {
+            center: [102.84233, 24.88163],
+            zoom: 10,
+            boxZoom:true,
+            });
+        var url = "http://webrd0{s}.is.autonavi.com/appmaptile?x={x}&y={y}&z={z}&lang=zh_cn&size=1&scale=1&style=8";
+        var layer = new L.TileLayer(url, {
+              subdomains:"1234"
+            });
+        map.addLayer(layer);
+        var marker = new L.marker([102.84233, 24.88163]);    
+        //var baseLayers = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        //    maxZoom: 18
+       // }).addTo(map);
+        var wmsLayer = L.tileLayer.wms(
+            "http://localhost:8081/geoserver/vcty/wms?",{
+               layers:'vcty:wgs84',
+               format: 'image/png',//返回的数据格式
+                transparent: true,
+            });
+        console.log(map.getCenter());
+        map.addLayer(wmsLayer);
+    </script>
+</body>
+</html>
